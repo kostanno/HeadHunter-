@@ -1,0 +1,42 @@
+[project]
+name = "hh"
+version = "0.1.0"
+description = ""
+authors = [
+    {name = "Kostya Igonin",email = "Igoninqw@gmail.com"}
+]
+readme = "README.md"
+requires-python = ">=3.13"
+dependencies = [
+    "requests (>=2.32.4,<3.0.0)",
+    "python-dotenv (>=1.1.0,<2.0.0)",
+    "python-mock (>=0.0.3,<0.0.4)",
+    "pandas (>=2.3.0,<3.0.0)",
+    "openpyxl (>=3.1.5,<4.0.0)",
+    "psycopg2 (>=2.9.10,<3.0.0)"
+]
+
+[build-system]
+requires = ["poetry-core>=2.0.0,<3.0.0"]
+build-backend = "poetry.core.masonry.api"
+
+[tool.poetry.group.lint.dependencies]
+mypy = "^1.15.0"
+black = "^25.1.0"
+flake8 = "^7.3.0"
+
+[tool.poetry.group.dev.dependencies]
+pytest = "^8.4.1"
+
+[tool.mypy]
+disallow_untyped_defs = true
+warn_return_any = true
+exclude = "venv"
+black = "^25.1.0"
+[tool.black]
+line-length = 119
+exclude = ".git"
+isort = "^6.0.1"
+[tool.isort]
+line_lenght = 119
+
