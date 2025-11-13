@@ -5,25 +5,27 @@ from typing import List, Dict, Any, Optional
 class Vacancy:
     """Класс для представления вакансии"""
 
-    def __init__(self, title: str, url: str, salary: Optional[Dict], description: str):
-        self._title = self._validate_title(title)
-        self._url = self._validate_url(url)
-        self._salary = self._validate_salary(salary)
-        self._description = self._validate_description(description)
+    __slots__ = ('__title', '__url', '__salary', '__description')
 
-    def _validate_title(self, title: str) -> str:
+    def __init__(self, title: str, url: str, salary: Optional[Dict], description: str):
+        self.__title = self.__validate_title(title)
+        self.__url = self.__validate_url(url)
+        self.__salary = self.__validate_salary(salary)
+        self.__description = self.__validate_description(description)
+
+    def __validate_title(self, title: str) -> str:
         """Валидация названия вакансии"""
         if not title or not isinstance(title, str):
             return "Название не указано"
         return title
 
-    def _validate_url(self, url: str) -> str:
+    def __validate_url(self, url: str) -> str:
         """Валидация URL"""
         if not url or not isinstance(url, str):
             return "URL не указан"
         return url
 
-    def _validate_salary(self, salary) -> str:
+    def __validate_salary(self, salary) -> str:
         """Валидация и форматирование зарплаты"""
         if not salary:
             return "Зарплата не указана"
@@ -44,38 +46,38 @@ class Vacancy:
         except (AttributeError, TypeError):
             return "Зарплата не указана"
 
-    def _validate_description(self, description: str) -> str:
+    def __validate_description(self, description: str) -> str:
         """Валидация описания"""
         if not description or not isinstance(description, str):
             return "Описание не указано"
 
     @property
     def title(self) -> str:
-        return self._title
+        return self.__title
 
     @property
     def url(self) -> str:
-        return self._url
+        return self.__url
 
     @property
     def salary(self) -> str:
-        return self._salary
+        return self.__salary
 
     @property
     def description(self) -> str:
-        return self._description
+        return self.__description
 
     def get_salary_numeric(self) -> int:
         """Получение числового значения зарплаты для сравнения"""
-        if self._salary == "Зарплата не указана":
+        if self.__salary == "Зарплата не указана":
             return 0
 
         try:
-            salary_text = self._salary.split()[0]
+            salary_text = self.__salary.split()[0]
             if salary_text == 'от':
-                salary_text = self._salary.split()[1]
+                salary_text = self.__salary.split()[1]
             elif salary_text == 'до':
-                salary_text = self._salary.split()[1]
+                salary_text = self.__salary.split()[1]
             salary_text = ''.join(filter(str.isdigit, salary_text))
             return int(salary_text) if salary_text else 0
         except (ValueError, IndexError, AttributeError):
@@ -107,7 +109,7 @@ class Vacancy:
         return cls(
             title=data.get('title', ''),
             url=data.get('url', ''),
-            salary={'from': None, 'to': None, 'currency': 'RUR'},  # Заглушка для salary
+            salary={'from': None, 'to': None, 'currency': 'RUR'},
             description=data.get('description', '')
         )
 
